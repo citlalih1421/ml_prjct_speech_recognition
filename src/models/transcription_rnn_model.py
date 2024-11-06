@@ -1,0 +1,1 @@
+#TODO:  Implement a bi-directional LSTM or GRU-based transcription model with a CTC loss function. 

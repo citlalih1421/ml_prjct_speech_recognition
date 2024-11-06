@@ -1,0 +1,6 @@
+data/raw/common-voice/* filter=lfs diff=lfs merge=lfs -text
+data/processed/common-voice/* filter=lfs diff=lfs merge=lfs -text
+
+*.mp3 filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text
