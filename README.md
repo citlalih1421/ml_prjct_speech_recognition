@@ -31,12 +31,6 @@ The following are things to keep in mind for this project.....
 ### Python Libraries
 `pip install librosa numpy pandas`
 
-### System Instalations
- `git lfs install`
-
-  For more information on how to download and the uses of git lfs, do to the link below.
-  https://git-lfs.com
-
 
  ### Recommended 
  I recommend using the extention Better Comments in VS Code. It's practical for visualization of comments.
