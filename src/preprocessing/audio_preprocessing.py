@@ -6,15 +6,19 @@ import numpy as np
 
 #& define the paths used (input and output)
 #* input paths
-commmon_voice_dir = os.path.expanduser('~/ml_prjct/data/raw/common-voice')
-accents_dir = os.path.expanduser('~/ml_prjct/data/processed')
+cv_dev = os.path.expanduser('~/ml_prjct_speech_recognition/data/raw/common-voice/cv-valid-dev')
+cv_test = os.path.expanduser('~/ml_prjct_speech_recognition/data/raw/common-voice/cv-valid-test')
+cv_train = os.path.expanduser('~/ml_prjct_speech_recognition/data/raw/common-voice/cv-valid-train')
+
 #*output paths
-common_voice_processed_dir = "data/processed/common-voice/"
-accents_processed_dir = "data/processed/accents/"
+base_path = os.path.expanduser('~/ml_prjct_speech_recognition')
+cv_dev_processed = os.path.join(base_path, "data/processed/common-voice/cv-dev")
+cv_test_processed = os.path.join(base_path, "data/processed/common-voice/cv-test")
+cv_train_processed = os.path.join(base_path, "data/processed/common-voice/cv-train")
 
 #* create output directories if they don't exist
-os.makedirs(common_voice_processed_dir, exist_ok = True)
-os.makedirs(accents_processed_dir, exist_ok = True)
+os.makedirs(cv_dev_processed, exist_ok = True)
+##os.makedirs(accents_processed_dir, exist_ok = True)
 
 
 
@@ -61,7 +65,7 @@ def process_dataset(dataset_dir, output_dir, save_as_tensor=True):
 
 
 # Process Common Voice dataset
-process_dataset(common_voice_dir, common_voice_processed_dir)
+process_dataset(cv_dev, cv_dev_processed)
 
 # Process Accents dataset
 ## process_dataset(accents_dir, accents_processed_dir)
