@@ -3,7 +3,7 @@ from transformers import pipeline
 
 
 
-def asr_transformer_func(audio_path, output_txt_path):
+def asr_transformer_func(audio_path, output_txt_path, device):
     asr_pipeline = pipeline("automatic-speech-recognition", model="facebook/wav2vec2-base-960h", device=device)
     """
     Transcribe an audio file and save the transcription to a text file.

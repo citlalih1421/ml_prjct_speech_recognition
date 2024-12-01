@@ -22,10 +22,6 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 device = 0 if torch.cuda.is_available() else -1
 
-#asr_pipeline = pipeline("automatic-speech-recognition", model="facebook/wav2vec2-base-960h",device=device)
-#summarizer = pipeline("summarization", model="jordiclive/flan-t5-3b-summarizer")
-
-
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -54,13 +50,19 @@ def upload():
     file.save(file_path)
 
     try:
-        # Process the file: Transcription
+        print(f"Processing file: {file_path}")
+        
+        # Transcription
+        print("Starting transcription...")
         transcription_file = os.path.splitext(file_path)[0] + '.txt'
-        asr_transformer_func(file_path, transcription_file)
-
-        # Process the file: Summarization
-        summarizing_func(transcription_file)
-
+        asr_transformer_func(file_path, transcription_file, device)
+        print("Transcription completed.")
+        
+        # Summarization
+        print("Starting summarization...")
+        summarizing_func(transcription_file, device)
+        print("Summarization completed.")
+        
         # Read summarized content
         with open(transcription_file, 'r') as f:
             summarized_content = f.read()
@@ -73,50 +75,3 @@ def upload():
 # Run the app
 if __name__ == '__main__':
     app.run(debug=True)
-
-'''
-@app.route('/upload', methods=['POST'])
-def upload():
-    if request.method == 'POST':
-        if 'file' not in request.files:
-            return render_template('index.html', summary='', error="No file uploaded.")
-        
-        file = request.files['file']
-        
-        if file.filename == '':
-            return render_template('index.html', summary='', error="No file selected.")
-        
-        if not allowed_file(file.filename):
-            return render_template('index.html', summary='', error="Unsupported file format. Please upload a .wav, .mp3, or .m4a file.")
-        
-        filename = secure_filename(file.filename)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(file_path) 
-        
-
-        
-        try:
-            
-            analysis_message = "Transcribing audio file..."
-            transcription_file = os.path.splitext(file_path)[0] + '.txt'
-            asr_transformer_func(file_path, transcription_file)
-
-            analysis_message = "Summarizing transcript..."
-            summarizing_func(transcription_file)
-
-            with open(transcription_file, 'r') as f:
-                summarized_content = f.read()
-
-            return render_template('index.html', summary=summarized_content, error='')
-        
-        except Exception as e:
-            # Handle any errors during processing
-            return render_template('index.html', summary='', error=f"Error processing the audio file: {str(e)}")
-
-    return render_template('index.html', summary='', error='')
-
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
-    '''

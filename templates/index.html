@@ -63,29 +63,31 @@
 
     
     <script>
+        // Event listener for the Record button (Feature Placeholder)
         document.getElementById('record-btn').addEventListener('click', () => {
             alert('Recording Audio... Feature coming soon!');
         });
-
+    
+        // Event listener for the Upload button
         document.getElementById('upload-btn').addEventListener('click', (event) => {
             event.preventDefault(); // Prevent default form submission behavior
-
+    
             const fileInput = document.getElementById('fileInput');
             const file = fileInput.files[0]; // Get the selected file
-
+    
             if (!file) {
                 alert('Please select a file.');
                 return;
             }
-
+    
             // Prepare the file for upload
             const formData = new FormData();
             formData.append('file', file);
-
+    
             // Display a loading message
             const messagesSection = document.getElementById('messages-section');
             messagesSection.innerHTML = '<div class="alert alert-info">Uploading and processing file...</div>';
-
+    
             // Send the file to the server
             fetch('/upload', {
                 method: 'POST',
@@ -93,19 +95,17 @@
             })
                 .then((response) => {
                     if (!response.ok) {
-                        throw new Error('File upload failed.');
+                        return response.json().then((err) => {
+                            throw new Error(err.error || "Unknown error occurred.");
+                        });
                     }
                     return response.json();
                 })
                 .then((data) => {
-                    if (data.error) {
-                        throw new Error(data.error);
-                    }
-
-                    // Display the summarized content
+                    // Populate the summary box with the processed summary
                     const summaryBox = document.getElementById('summary-box');
                     summaryBox.value = data.summary;
-
+    
                     // Clear messages and show success
                     messagesSection.innerHTML = '<div class="alert alert-success">File processed successfully!</div>';
                 })
@@ -114,30 +114,33 @@
                     messagesSection.innerHTML = `<div class="alert alert-danger">${error.message}</div>`;
                 });
         });
+    
+        // Event listener for the Clear button
         document.getElementById('clear-btn').addEventListener('click', () => {
             document.getElementById('summary-box').value = '';
             alert('Summary cleared.');
         });
-
+    
+        // Event listener for the Save button
         document.getElementById('save-btn').addEventListener('click', () => {
             // Content to save
             const content = document.getElementById('summary-box').value;
-
+    
             if (!content.trim()) {
                 alert('No content to save. Please upload notes and allow for summarization first.');
                 return;
             }
-            
+    
+            // Save the summary as a text file
             const blob = new Blob([content], { type: 'text/plain' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = 'summary.txt'; 
             link.click();
             URL.revokeObjectURL(link.href);
-
+    
             alert('File saved successfully!');
         });
     </script>
 </body>
 </html>
-
