@@ -5,7 +5,10 @@ This a project for CSE 4683 (Machine Learning & Soft Commputing) at Mississippi 
 This project focuses on building a speech recognition system to help students better understand teachers with different accents by providing accurate transcripts and clear summaries of lectures. The system will use two main components: speech transcription and summarization. These will be implemented using Recurrent Neural Networks (RNNs) and Transformer models to compare their performance on open-source datasets. The end goal is to create a tool where users can upload audio and receive both a transcription and a summary in one simple system.
 
 *** 
+## Running project
+In the ml_prjct_speech_recognition directory, run in the terminal `python3 app.py` after installing the requirements
 
+***
 The following are things to keep in mind for this project..... 
 
 ## Python virtual environment
@@ -29,7 +32,7 @@ The following are things to keep in mind for this project.....
 
 ## Installations Needed
 ### Python Libraries
-`pip install librosa numpy pandas`
+`pip install librosa numpy pandas transformers evaluate`
 
 
  ### Recommended 
